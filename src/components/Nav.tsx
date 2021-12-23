@@ -1,24 +1,21 @@
-import React, {useState} from 'react';
+import React, {Dispatch, useState} from 'react';
 import {connect} from 'react-redux';
 import {User} from '../models/user';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Redirect} from 'react-router';
+import {setUser} from '../redux/actions/setUserAction';
 
-const Nav = (props: {user: User} ) => {
-  const [redirect, setRedirect] = useState(false)
+const Nav = (props: any) => {
 
   const logout = async () => {
     await axios.post('logout')
-    setRedirect(true)
+    props.setUser(null)
   }
 
-  if (redirect) {
-    return <Redirect to={'/login'} />
-  }
 
   let menu;
-  // only if user id is set here
+  // only if user id is set login status show
   if(props.user?.id) {
     menu = (
       <div className="col-md-3 text-end">
@@ -58,5 +55,8 @@ const Nav = (props: {user: User} ) => {
 export default connect(
   (state: {user: User}) => ({
     user: state.user
-  })
+  }),
+ (dispatch: Dispatch<any>) => ({
+  setUser: (user: User) => dispatch(setUser(user))
+})
 )(Nav);

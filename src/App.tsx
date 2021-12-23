@@ -7,6 +7,7 @@ import Header from './components/Header';
 import ProductFrontend from './pages/ProductFrontend';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Route path={'/'} exact component={ProductFrontend} />
       <Route path={'/login'} exact component={Login} />
       <Route path={'/register'} exact component={Register} />
+      <Route path={'/profile'} exact component={Profile} />
     </BrowserRouter>
   );
 }
