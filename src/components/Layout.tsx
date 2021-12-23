@@ -3,8 +3,8 @@ import Nav from './Nav';
 import Header from './Header';
 import axios from 'axios';
 import {Redirect} from 'react-router';
-import {User} from '../../../react-admin/src/models/user';
-import {setUser} from '../../../react-admin/src/redux/actions/setUserAction';
+import {User} from '../models/user';
+import {setUser} from '../redux/actions/setUserAction';
 import {connect} from 'react-redux';
 
 const Layout = (props: any) => {
