@@ -8,6 +8,8 @@ import ProductFrontend from './pages/ProductFrontend';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Stats from './pages/Stats';
+import Rankings from './pages/Rankings';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Route path={'/login'} exact component={Login} />
       <Route path={'/register'} exact component={Register} />
       <Route path={'/profile'} exact component={Profile} />
+      <Route path={'/stats'} exact component={Stats} />
+      <Route path={'/rankings'} exact component={Rankings} />
     </BrowserRouter>
   );
 }
