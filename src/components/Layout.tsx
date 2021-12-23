@@ -1,8 +1,35 @@
-import React from 'react';
+import React, {Dispatch, useEffect, useState} from 'react';
 import Nav from './Nav';
 import Header from './Header';
+import axios from 'axios';
+import {Redirect} from 'react-router';
+import {User} from '../../../react-admin/src/models/user';
+import {setUser} from '../../../react-admin/src/redux/actions/setUserAction';
+import {connect} from 'react-redux';
 
 const Layout = (props: any) => {
+  const [redirect, setRedirect] = useState(false)
+
+  useEffect(() => {
+    // this way using sync function inside useEffect
+    (
+      async () => {
+        try {
+          const {data} = await axios.get('user')
+          // emit event here using redux prop of setUser
+          props.setUser(data)
+        } catch (e) {
+          setRedirect(true)
+        }
+
+      }
+    )()
+  }, [])
+
+  if (redirect) {
+    return <Redirect to={'/login'} />
+  }
+
   return (
     <div>
       <Nav />
@@ -20,4 +47,14 @@ const Layout = (props: any) => {
   );
 };
 
-export default Layout;
+// get events form other component
+const mapStateToProps = (state: {user: User}) => ({
+  user: state.user
+})
+
+// send event to other component
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+  setUser: (user: User) => dispatch(setUser(user))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);
