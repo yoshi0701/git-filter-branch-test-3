@@ -9,7 +9,8 @@ const ProductFrontend = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
   const [filters, setFilters] = useState<Filters>({
-    s: ''
+    s: '',
+    sort: '',
   })
 
   useEffect(() => {

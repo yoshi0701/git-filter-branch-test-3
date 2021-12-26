@@ -9,7 +9,8 @@ const ProductBackend = () => {
   const [products, setProducts] = useState<Product[]>([])
 
   const [filters, setFilters] = useState<Filters>({
-    s: ''
+    s: '',
+    sort: '',
   })
 
   useEffect(() => {
@@ -19,6 +20,10 @@ const ProductBackend = () => {
 
         if(filters.s) {
           arr.push(`s=${filters.s}`)
+        }
+
+        if (filters.sort) {
+          arr.push(`sort=${filters.sort}`)
         }
         const {data} = await axios.get(`products/backend?${arr.join('&')}`);
 
