@@ -21,6 +21,13 @@ const Products = (props: {
       sort,
     })
   }
+
+  const load = () => {
+    props.setFilters({
+      ...props.filters,
+      page: props.filters.page +1
+    })
+  }
   return (
     <>
       <div className="col-md-12 mb-4 input-group">
@@ -53,6 +60,9 @@ const Products = (props: {
           )
         })}
 
+      </div>
+      <div className="d-flex justify-content-center mt-4">
+        <button className="btn btn-primary" onClick={load}>Load More</button>
       </div>
     </>
 

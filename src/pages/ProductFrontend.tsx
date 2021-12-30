@@ -11,6 +11,7 @@ const ProductFrontend = () => {
   const [filters, setFilters] = useState<Filters>({
     s: '',
     sort: '',
+    page: 1,
   })
 
   useEffect(() => {
