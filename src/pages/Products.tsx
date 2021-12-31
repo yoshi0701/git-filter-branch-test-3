@@ -1,16 +1,19 @@
 import React from 'react';
 import {Product} from '../models/products';
 import {Filters} from '../models/filters';
+import {findAllByDisplayValue} from '@testing-library/react';
 
 const Products = (props: {
   products: Product[],
   filters: Filters,
-  setFilters: (filters: Filters) => void
+  setFilters: (filters: Filters) => void,
+  lastPage: number,
 }) => {
 
   const search = (s: string) => {
     props.setFilters({
       ...props.filters,
+      page: 1,
       s
     })
   }
@@ -18,6 +21,7 @@ const Products = (props: {
   const sort = (sort: string) => {
     props.setFilters({
       ...props.filters,
+      page: 1,
       sort,
     })
   }
@@ -28,6 +32,16 @@ const Products = (props: {
       page: props.filters.page +1
     })
   }
+
+  let button;
+  if (props.filters.page != props.lastPage) {
+    button = (
+      <div className="d-flex justify-content-center mt-4">
+        <button className="btn btn-primary" onClick={load}>Load More</button>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="col-md-12 mb-4 input-group">
@@ -61,9 +75,7 @@ const Products = (props: {
         })}
 
       </div>
-      <div className="d-flex justify-content-center mt-4">
-        <button className="btn btn-primary" onClick={load}>Load More</button>
-      </div>
+      {button}
     </>
 
   );

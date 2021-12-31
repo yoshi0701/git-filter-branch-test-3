@@ -14,6 +14,9 @@ const ProductFrontend = () => {
     page: 1,
   })
 
+  const [lastPage, setLastPage] = useState(0)
+  const perPage = 9;
+
   useEffect(() => {
     (
       async () => {
@@ -21,6 +24,7 @@ const ProductFrontend = () => {
 
         setAllProducts(data)
         setFilteredProducts(data)
+        setLastPage(Math.ceil(data.length / perPage))
       }
     )()
   }, [])
@@ -56,13 +60,15 @@ const ProductFrontend = () => {
       })
     }
 
-    setFilteredProducts(products)
+    setLastPage(Math.ceil(products.length / perPage))
+    // initial page is 9 items per page (lazy loading to reduce all request at single times)
+    setFilteredProducts(products.slice(0, filters.page * perPage))
   }, [filters])
 
 
   return (
     <Layout>
-      <Products products={filteredProducts} filters={filters} setFilters={setFilters} />
+      <Products products={filteredProducts} filters={filters} setFilters={setFilters} lastPage={lastPage} />
     </Layout>
   );
 };
