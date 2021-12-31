@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Product} from '../models/products';
 import {Filters} from '../models/filters';
 import {findAllByDisplayValue} from '@testing-library/react';
@@ -9,6 +9,7 @@ const Products = (props: {
   setFilters: (filters: Filters) => void,
   lastPage: number,
 }) => {
+  const [selected, setSelected] = useState<number[]>([])
 
   const search = (s: string) => {
     props.setFilters({
@@ -31,6 +32,14 @@ const Products = (props: {
       ...props.filters,
       page: props.filters.page +1
     })
+  }
+
+  const select= (id: number) => {
+    if (selected.some(s => s ===id)) {
+      setSelected(selected.filter(s => s !== id))
+      return
+    }
+    setSelected([...selected, id])
   }
 
   let button;
@@ -59,8 +68,8 @@ const Products = (props: {
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {props.products.map(product => {
           return (
-            <div className="col">
-              <div className="card shadow-sm">
+            <div className="col" key={product.id} onClick={() => select(product.id)} >
+              <div className={selected.some(s => s === product.id) ? "card shadow-sm selected" : "card shadow-sm"}>
                 <img src={product.image} height={200} />
 
                 <div className="card-body">
